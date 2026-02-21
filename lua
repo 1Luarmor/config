@@ -1,5 +1,7 @@
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+-- Load Rayfield
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
 
+-- Create main window
 local Window = Rayfield:CreateWindow({
     Name = "Config System",
     LoadingTitle = "Loading...",
@@ -11,6 +13,7 @@ local Window = Rayfield:CreateWindow({
     }
 })
 
+-- Create main tab
 local MainTab = Window:CreateTab("Configs", 4483362458)
 
 local ConfigSelected = nil
@@ -28,12 +31,12 @@ local ConfigsDropdown = MainTab:CreateDropdown({
     end,
 })
 
--- INPUT
+-- INPUT (fixed)
 MainTab:CreateInput({
     Name = "Config Name",
     CurrentValue = "",
     PlaceholderText = "Enter config name",
-    RemoveTextAfterFocusLost = false,
+    RemoveTextAfterFocusLost = true, -- fixed bug
     Flag = "ConfigName",
     Callback = function(Value)
         ConfigName = Value
@@ -80,15 +83,18 @@ MainTab:CreateButton({
     end,
 })
 
+-- Example Toggle
 local Toggle = MainTab:CreateToggle({
    Name = "Test Example",
    CurrentValue = false,
-   Flag = "Toggle1", -- A flag is the identifier for the configuration file; make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Flag = "Toggle1",
    Callback = function(Value)
-   -- The function that takes place when the toggle is pressed
-   -- The variable (Value) is a boolean on whether the toggle is true or false
+       -- Function triggered when toggle changes
    end,
 })
 
--- Initial refresh
+-- Initial refresh of dropdown
 Rayfield:RefreshConfigsList(ConfigsDropdown)
+
+-- Load configuration (fixes input bug)
+Rayfield:LoadConfiguration()
